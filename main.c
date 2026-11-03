@@ -19,9 +19,9 @@ void removeNewline(char text[])
 
 {
     int i =0;
-    while (text[i] != "\0"){            // go through the text letter by letter
-        if (text[i] == "\n"){
-            text[i] = "\0";           //cut the text off here
+    while (text[i] != '\0'){            // go through the text letter by letter
+        if (text[i] == '\n'){
+            text[i] = '\0';           //cut the text off here
         }
         i++;
     }
@@ -49,14 +49,14 @@ void enterData(void)
 
     printf("Enter the name of the band/singer : ");
     fgets(songs[count].band, 100, stdin);   // read data into the program with stdin
-    removeNewline(songs[count].title);
+    removeNewline(songs[count].band);
 
     printf("Enter the name of the Song: ");
     fgets(songs[count].title, 100, stdin);
     removeNewline(songs[count].title);
 
-    print("Price: ");
-    scanf("%.2f", &songs[count].price);
+    printf("Price: ");
+    scanf("%f", &songs[count].price);
 
     printf("Year of release: ");
     scanf("%d", &songs[count].year);
@@ -130,10 +130,12 @@ void sortSongs(void)
     struct Song temp;
 
     for (i = 0; i < count - 1; i++) {
-        if (songs[j].year < songs[j +1].year) {
-            temp = songs[j];
-            songs[j] = songs[j + 1];
-            songs[j + 1] = temp;
+        for (j = 0; j < count - 1; j++){
+            if (songs[j].year < songs[j +1].year) {
+                temp = songs[j];
+                songs[j] = songs[j + 1];
+                songs[j + 1] = temp;
+            }
         }
     }
 }
