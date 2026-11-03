@@ -125,3 +125,15 @@ void readFromFile(void)
 
 // Put the songs in order of newest to oldest
 void sortSongs(void)
+{
+    int i, j;
+    struct Song temp;
+
+    for (i = 0; i < count - 1; i++) {
+        if (songs[j].year < songs[j +1].year) {
+            temp = songs[j];
+            songs[j] = songs[j + 1];
+            songs[j + 1] = temp;
+        }
+    }
+}
