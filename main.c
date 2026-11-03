@@ -137,3 +137,24 @@ void sortSongs(void)
         }
     }
 }
+
+// display all songs on the screen
+
+void printCatalogue(void)
+{
+    int i;
+
+    if (count == 0) {
+        printf("There are no songs yet! \n");
+        return;
+    }
+
+    sortSongs();
+
+    for (i = 0; i < count; i++) {
+        printf("Name of Band: %s\n", songs[i].band);
+        printf("Name of Song: %s\n", songs[i].title);
+        printf("Price: %.2f\n", songs[i].price);
+        printf("Year of Release: %d\n", songs[i].year);
+    }
+}
