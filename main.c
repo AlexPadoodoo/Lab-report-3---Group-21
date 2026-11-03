@@ -173,7 +173,7 @@ int main(void)
         printf("Exit the program [5] \n");
         printf("Enter your choice now: ");
         scanf("%d", &choice);
-        getchar();a
+        getchar();
 
         if (choice == 1){
             enterData();
