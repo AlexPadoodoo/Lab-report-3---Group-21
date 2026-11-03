@@ -35,7 +35,7 @@ void enterData(void)
     int i;
 
     printf("How many songs do you want to enter? ");
-    scanf(%d, &howMany);
+    scanf("%d", &howMany);
     getchar();
 
 
@@ -65,3 +65,27 @@ void enterData(void)
     count = count + 1;
 }
 
+
+// Save the songs into a file
+
+void saveToFile(void)
+{
+    FILE *file;
+    int i;
+
+    file = fopen("songs.txt", "w");   // writing into the file
+
+    if (file ==NULL) {
+        printf("Could not open the file! \n");
+        return;
+    }
+
+    for (i = 0; i < count; i++) {
+        fprintf(file, "%s\n", songs[i].band);
+        fprintf(file, "%s\n", songs[i].title);
+        fprintf(file, "%f %d\n", songs[i].price, songs[i].year);
+    }
+
+    fclose(file);
+    printf("Saved %d songs! \n", count);
+}
