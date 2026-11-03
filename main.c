@@ -158,3 +158,41 @@ void printCatalogue(void)
         printf("Year of Release: %d\n", songs[i].year);
     }
 }
+
+
+int main(void)
+{
+    int choice = 0;
+
+    while (choice != 5){
+        printf(" **** SONG CATALOGUE **** \n");
+        printf("Enter data [1] \n");
+        printf("Save data to file [2] \n");
+        printf("Read data from file [3] \n");
+        printf("Print out the catalogue [4] \n");
+        printf("Exit the program [5] \n");
+        printf("Enter your choice now: ");
+        scanf("%d", &choice);
+        getchar();a
+
+        if (choice == 1){
+            enterData();
+        }
+        else if (choice == 2){
+            saveToFile();
+        }
+        else if (choice == 3){
+            readFromFile();
+        }
+        else if (choice == 4){
+            printCatalogue();
+        }
+        else if (choice == 5){
+            printf("Goodbye! \n");
+        }
+        else {
+            printf("Please choose a number from 1 to 5! \n");
+        }
+    }
+    return 0;
+}
