@@ -89,3 +89,39 @@ void saveToFile(void)
     fclose(file);
     printf("Saved %d songs! \n", count);
 }
+
+
+
+// Read the songs back from the file
+
+void readFromFile(void)
+{
+    FILE *file;
+
+    file = fopen("songs.txt", "r");
+
+    if (file == NULL) {
+        printf("Could not open the file! (Make sure you save first) \n");
+        return;
+    }
+
+    count = 0;
+
+    while (count < MAX_SONGS && fgets(songs[count].band, 100, file) != NULL) {
+        removeNewline(songs[count].band);
+
+        fgets(songs[count].title, 100, file);
+        removeNewline(songs[count].title);
+
+        fscanf(file, "%f %d", &songs[count].price, &songs[count].year);
+        fgetc(file);
+
+        count = count + 1;
+    }
+
+    fclose(file);
+    printf("Loaded %d songs! \n", count);
+}
+
+// Put the songs in order of newest to oldest
+void sortSongs(void)
