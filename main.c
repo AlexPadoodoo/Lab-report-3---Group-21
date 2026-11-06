@@ -55,7 +55,7 @@ void enterData(void)
         fgets(songs[count].title, 100, stdin);
         removeNewline(songs[count].title);
 
-        printf("Enter the price: ")
+        printf("Enter the price: ");
         scanf("%f", &songs[count].price);
 
         printf("Enter the year of release: ");
