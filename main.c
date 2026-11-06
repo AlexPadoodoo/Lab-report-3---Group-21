@@ -77,7 +77,7 @@ void saveToFile(void)
     file = fopen("songs.txt", "w");   // writing into the file
 
     if (file ==NULL) {
-        printf("Could not open the file! \n");
+        printf("\nCould not open the file!\n");
         return;
     }
 
@@ -88,7 +88,7 @@ void saveToFile(void)
     }
 
     fclose(file);
-    printf("Saved %d songs! \n", count);
+    printf("\nSaved %d songs to songs.txt!\n", count);
 }
 
 
@@ -99,14 +99,14 @@ void readFromFile(void)
 {
     FILE *file;
 
-    file = fopen("songs.txt", "r");
+    file = fopen("songs.txt", "r");         //"r" = read
 
     if (file == NULL) {
-        printf("Could not open the file! (Make sure you save first) \n");
+        printf("\nCould not open the file! (Make sure you save first) \n");
         return;
     }
 
-    count = 0;
+    count = 0;              // start again from an empty catalogue
 
     while (count < MAX_SONGS && fgets(songs[count].band, 100, file) != NULL) {
         removeNewline(songs[count].band);
@@ -121,7 +121,7 @@ void readFromFile(void)
     }
 
     fclose(file);
-    printf("Loaded %d songs! \n", count);
+    printf("\nLoaded %d songs from songs.txt! \n", count);
 }
 
 // Put the songs in order of newest to oldest
@@ -148,11 +148,13 @@ void printCatalogue(void)
     int i;
 
     if (count == 0) {
-        printf("There are no songs yet! \n");
+        printf("\nThere are no songs yet! \n");
         return;
     }
 
     sortSongs();
+
+    printf("\n======= CATALOGUE (new to old) =======\n");
 
     for (i = 0; i < count; i++) {
         printf("Name of Band: %s\n", songs[i].band);
@@ -160,6 +162,8 @@ void printCatalogue(void)
         printf("Price: %.2f\n", songs[i].price);
         printf("Year of Release: %d\n", songs[i].year);
     }
+
+    printf("\n=====================================\n");
 }
 
 
@@ -168,7 +172,7 @@ int main(void)
     int choice = 0;
 
     while (choice != 5){
-        printf(" **** SONG CATALOGUE **** \n");
+        printf("\n **** SONG CATALOGUE **** \n");
         printf("Enter data [1] \n");
         printf("Save data to file [2] \n");
         printf("Read data from file [3] \n");
@@ -191,10 +195,10 @@ int main(void)
             printCatalogue();
         }
         else if (choice == 5){
-            printf("Goodbye! \n");
+            printf("\nGoodbye! \n");
         }
         else {
-            printf("Please choose a number from 1 to 5! \n");
+            printf("\nPlease choose a number from 1 to 5! \n");
         }
     }
     return 0;
