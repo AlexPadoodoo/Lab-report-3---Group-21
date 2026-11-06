@@ -2,28 +2,32 @@
 
 #define MAX_SONGS 100       //most songs the catalogue can hold
 
+//structure to group all the details of one song into a single item
+
 struct Song{
-    char band[100];         // name of the band or singer
+    char band[100];         // name of the band or singer (up to 99)
     char title[100];       // name of the song
-    float price;               // price
-    int year;           // year of release
+    float price;            // price
+    int year;               // year of release
 };
 
-
+// Array of structures to hold all the songs (up to the max amount of songs which is 100)
 struct Song songs[MAX_SONGS];
 
-int count = 0;
+int count = 0;          //keep track of how many songs are stored at the moment, starting with 0
+                        //global so I can use for each function
 
 
+// function to keep the text clean in the UI when printing or saving
 void removeNewline(char text[])
 
 {
     int i =0;
     while (text[i] != '\0'){            // go through the text letter by letter
-        if (text[i] == '\n'){
+        if (text[i] == '\n'){           // if this letter is the new line then
             text[i] = '\0';           //cut the text off here
         }
-        i++;
+        i++;        // move ontp the next letter
     }
 }
 
@@ -32,13 +36,13 @@ void removeNewline(char text[])
 void enterData(void)
 {
     int howMany;
-    int i;
+    int i;          // loop counter
 
     printf("\n How many songs do you want to enter? ");
-    scanf("%d", &howMany);
-    getchar();          // removes the enter left behind by scanf
+    scanf("%d", &howMany);          //read keyboard input
+    getchar();          // removes the enter left behind by scanf otherwise the next fgets would read an empty line
 
-
+// repeat once for each song the user wants to enter
     for (i=0; i < howMany; i++) {
         if (count >= MAX_SONGS) {
             printf("The catalogue is full! \n");
@@ -71,23 +75,25 @@ void enterData(void)
 
 void saveToFile(void)
 {
-    FILE *file;
-    int i;
+    FILE *file;         //pointer used to refer to the file
+    int i;          // loop counter
 
-    file = fopen("songs.txt", "w");   // writing into the file
+    file = fopen("songs.txt", "w");   // writing into the file but also wipes if it exists
 
+
+//fopen will give NULL if the file cannot be opened    
     if (file ==NULL) {
         printf("\nCould not open the file!\n");
         return;
     }
 
-    for (i = 0; i < count; i++) {
+    for (i = 0; i < count; i++) {           //writes every song into the file
         fprintf(file, "%s\n", songs[i].band);
         fprintf(file, "%s\n", songs[i].title);
         fprintf(file, "%.2f %d\n", songs[i].price, songs[i].year);
     }
 
-    fclose(file);
+    fclose(file);           //always close the file so everything is saved
     printf("\nSaved %d songs to songs.txt!\n", count);
 }
 
@@ -101,6 +107,7 @@ void readFromFile(void)
 
     file = fopen("songs.txt", "r");         //"r" = read
 
+    // if file doesn't exist or nothing is saved yet, then fopen gives NULL
     if (file == NULL) {
         printf("\nCould not open the file! (Make sure you save first) \n");
         return;
@@ -108,6 +115,9 @@ void readFromFile(void)
 
     count = 0;              // start again from an empty catalogue
 
+    //keep going while the array isn't full and there is another line to read
+    //fgets will give NULL once it reaches the end of the file, which will stop the loop
+    
     while (count < MAX_SONGS && fgets(songs[count].band, 100, file) != NULL) {
         removeNewline(songs[count].band);
 
@@ -115,27 +125,31 @@ void readFromFile(void)
         removeNewline(songs[count].title);
 
         fscanf(file, "%f %d", &songs[count].price, &songs[count].year);
-        fgetc(file);
+        fgetc(file);            // skip the '\n' left at the end of line 3
 
-        count = count + 1;
+        count = count + 1;      //load one more song
     }
 
-    fclose(file);
+    fclose(file);           //close the file once we have finished using it
     printf("\nLoaded %d songs from songs.txt! \n", count);
 }
 
 // Put the songs in order of newest to oldest
+// Bubble sort which will compare neighbouring songs and swap them
+//if in the wrong order, it will repeat the loop until everything is in the correct order
+
 void sortSongs(void)
 {
     int i, j;
-    struct Song temp;
+    struct Song temp;           //temporary song to help swap two songs
 
-    for (i = 0; i < count - 1; i++) {
-        for (j = 0; j < count - 1; j++){
-            if (songs[j].year < songs[j +1].year) {
-                temp = songs[j];
-                songs[j] = songs[j + 1];
-                songs[j + 1] = temp;
+    for (i = 0; i < count - 1; i++) {       //repeat the pass several times
+        for (j = 0; j < count - 1; j++){            //compare each song with the next one
+            if (songs[j].year < songs[j +1].year) {     //if the song on the left is older than the one on the right
+                // it will swap them so the newer song moves to the left
+                temp = songs[j];            // swap the songs so that newer song moves to the left and save it                 
+                songs[j] = songs[j + 1];        // copy right song into left place
+                songs[j + 1] = temp;        //put the saved song into the right place
             }
         }
     }
@@ -152,7 +166,7 @@ void printCatalogue(void)
         return;
     }
 
-    sortSongs();
+    sortSongs();        //puts the songs in order before printing
 
     printf("\n======= CATALOGUE (new to old) =======\n");
 
@@ -167,7 +181,7 @@ void printCatalogue(void)
     printf("\n=====================================\n");
 }
 
-
+// main program starts here
 int main(void)
 {
     int choice = 0;
@@ -181,7 +195,7 @@ int main(void)
         printf("Exit program [5] \n");
         printf("Enter your choice now: ");
         scanf("%d", &choice);
-        getchar();
+        getchar();      //remove the enter left behind by scanf
 
         if (choice == 1){
             enterData();
@@ -202,5 +216,5 @@ int main(void)
             printf("\nPlease choose a number from 1 to 5! \n");
         }
     }
-    return 0;
+    return 0;           // tells the computer the program has finished normally
 }
