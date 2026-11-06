@@ -1,12 +1,12 @@
 #include <stdio.h>
 
-#define MAX_SONGS 100
+#define MAX_SONGS 100       //most songs the catalogue can hold
 
 struct Song{
-    char band[100];
-    char title[100];
-    float price;
-    int year;
+    char band[100];         // name of the band or singer
+    char title[100];       // name of the song
+    float price;               // price
+    int year;           // year of release
 };
 
 
@@ -34,9 +34,9 @@ void enterData(void)
     int howMany;
     int i;
 
-    printf("How many songs do you want to enter? ");
+    printf("\n How many songs do you want to enter? ");
     scanf("%d", &howMany);
-    getchar();
+    getchar();          // removes the enter left behind by scanf
 
 
     for (i=0; i < howMany; i++) {
@@ -44,27 +44,28 @@ void enterData(void)
             printf("The catalogue is full! \n");
             return;
         }
+
+        printf("\n ---- Song %d of %d ---- \n", i + 1, howMany);
+
+        printf("Enter the name of the band/singer: ");
+        fgets(songs[count].band, 100, stdin);    // 100 is the limit
+        removeNewline(songs[count].band);
+
+        printf("Enter the name of the song: ");
+        fgets(songs[count].title, 100, stdin);
+        removeNewline(songs[count].title);
+
+        printf("Enter the price: ")
+        scanf("%f", &songs[count].price);
+
+        printf("Enter the year of release: ");
+        scanf("%d", &songs[count].year);
+        getchar();
+
+        count = count + 1;
     }
-    printf("\n **Song** %d", count + 1);
 
-    printf("Enter the name of the band/singer : ");
-    fgets(songs[count].band, 100, stdin);   // read data into the program with stdin
-    removeNewline(songs[count].band);
-
-    printf("Enter the name of the Song: ");
-    fgets(songs[count].title, 100, stdin);
-    removeNewline(songs[count].title);
-
-    printf("Price: ");
-    scanf("%f", &songs[count].price);
-
-    printf("Year of release: ");
-    scanf("%d", &songs[count].year);
-    getchar();
-
-    count = count + 1;
 }
-
 
 // Save the songs into a file
 
