@@ -84,7 +84,7 @@ void saveToFile(void)
     for (i = 0; i < count; i++) {
         fprintf(file, "%s\n", songs[i].band);
         fprintf(file, "%s\n", songs[i].title);
-        fprintf(file, "%f %d\n", songs[i].price, songs[i].year);
+        fprintf(file, "%.2f %d\n", songs[i].price, songs[i].year);
     }
 
     fclose(file);
