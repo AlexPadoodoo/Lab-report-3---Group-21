@@ -176,8 +176,8 @@ int main(void)
         printf("Enter data [1] \n");
         printf("Save data to file [2] \n");
         printf("Read data from file [3] \n");
-        printf("Print out the catalogue [4] \n");
-        printf("Exit the program [5] \n");
+        printf("Print out the catalogue to screen [4] \n");
+        printf("Exit program [5] \n");
         printf("Enter your choice now: ");
         scanf("%d", &choice);
         getchar();
