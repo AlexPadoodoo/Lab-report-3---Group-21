@@ -157,6 +157,7 @@ void printCatalogue(void)
     printf("\n======= CATALOGUE (new to old) =======\n");
 
     for (i = 0; i < count; i++) {
+        printf("\n");
         printf("Name of Band: %s\n", songs[i].band);
         printf("Name of Song: %s\n", songs[i].title);
         printf("Price: %.2f\n", songs[i].price);
