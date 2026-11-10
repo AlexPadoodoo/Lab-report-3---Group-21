@@ -21,13 +21,14 @@ int count = 0;          //keep track of how many songs are stored at the moment,
 // function to keep the text clean in the UI when printing or saving
 void removeNewline(char text[])
 
+// removes "\n" that fgets leaves at the end of the text when the user presses enter 
 {
     int i =0;
-    while (text[i] != '\0'){            // go through the text letter by letter
+    while (text[i] != '\0'){            // checks each character in turn, when it finds the newline it replaces it with '\0'
         if (text[i] == '\n'){           // if this letter is the new line then
             text[i] = '\0';           //cut the text off here
         }
-        i++;        // move ontp the next letter
+        i++;        // move onto the next letter
     }
 }
 
